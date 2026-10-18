@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: docker.io/library/postgres:17.10
+    ports:
+      - "127.0.0.1:5435:5432"
+    environment:
+      POSTGRES_DB: nto_team
+      POSTGRES_USER: nto
+      POSTGRES_PASSWORD: nto
+    volumes:
+      - team_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nto -d nto_team"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+volumes:
+  team_pg:
